@@ -12,7 +12,6 @@ public class WiimoteTest : MonoBehaviour {
 //	private LineRenderer lr;
 	public Transform portalGun;
 	private bool toPresentMessage = false;
-//	private string[] Message = { "Grab","Release"};
 	private string presentMessage;
 	private Transform grabbedObj;
 	private string objectFrontName;
@@ -31,23 +30,15 @@ public class WiimoteTest : MonoBehaviour {
 		portalGun.forward = Vector3.Normalize(Vector3.forward);
 
 		DirXform = GameObject.Find ("OVRPlayerController").transform;
-//		message3D = GameObject.Find ("3DMessage").GetComponent<TextMesh> ();
-//		Debug.Log (message3D.name);
-
-//		Debug.Log (receiver.wiimotes.Count);
-
-//		SetWiiMote ();
 
 		egm.DisableMenus = false;
 		
+		//since I don't know when the command will be set
 		while(true)
 		{
 			if(SetWiiMote ())
 				return;
 		}
-
-//		MouseAimTest ();
-//			Debug.Log("NO WIIMOTE DETECTED!!!");
 
 		grabbedObject_distance = 15.0f;
 	}
@@ -118,8 +109,9 @@ public class WiimoteTest : MonoBehaviour {
 		float x = egm.CurrentWiimote.PRY_YAW;
 		float y = egm.CurrentWiimote.PRY_PITCH;
 		float z = egm.CurrentWiimote.PRY_ROLL;
+		float a = egm.CurrentWiimote.PRY_ACCEL;
 //		portalGun.transform.eulerAngles = new Vector3 (x, y, z);
-		portalGun.forward = new Vector3 (x, y, z);
+		portalGun.forward = new Vector3 (x*a, y*a, z*a);
 		Debug.Log ("Direction vector: "+portalGun.forward);
 
 		//apply raycast
@@ -129,24 +121,8 @@ public class WiimoteTest : MonoBehaviour {
 		ray.direction = portalGun.forward;
 		if(Physics.Raycast(ray, out hit, 50.0f))
 		{
-			//			Vector3 targetDir = hit.transform.position - portalGun.position;
-			//			float angleBetween = Vector3.Angle(portalGun.forward, targetDir);
-			//			Debug.DrawLine(portalGun.position, hit.point);
-			//			Debug.Log(hit.transform.name);
-//			toPresentMessage = true;
-//			presentMessage = Message[0];
-//			if(hit.transform.tag.Equals("movable"))
-//			{
-//				message3D.text = Message[0] + " " + hit.transform.name;
-//				message3D.transform.position = new Vector3(hit.point.x, hit.point.y, 10.0f + ( hit.point.z) + (message3D.fontSize/1.5f));
-//				message3D.transform.forward = hit.transform.forward;
-//			}
-//			objectFrontName = hit.transform.name;
 			if(egm.CurrentWiimote.BUTTON_A == 1.0f && grabbedObj == null && hit.transform.tag.Equals("movable"))
 			{
-//				message3D.text="";
-//				message3D.renderer.enabled = false;
-//				presentMessage = Message[1];
 				grabbedObj = hit.transform;
 				grabbedObj.rigidbody.useGravity=false;
 				grabbedObj.rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -174,15 +150,7 @@ public class WiimoteTest : MonoBehaviour {
 				
 				grabbedObj.position = new Vector3(Nx,Ny,Nz);
 			}
-			//			Debug.Log(portalGun.transform.forward);
 		}
-		//		Debug.Log(gun_dir);
-//		else 
-//		{
-//			//			Debug.Log("");
-//			message3D.text="";
-////			toPresentMessage = false;
-//		}
 	}
 
 	private void NunchuckControls()
@@ -199,21 +167,12 @@ public class WiimoteTest : MonoBehaviour {
 
 		if(egm.CurrentWiimote != null)
 		{	
-			RenderWiimoteKeyStats();
+			//RenderWiimoteKeyStats();
 			
 //			GUI.DrawTexture(new Rect(mymote.IR_X * Screen.width/2, (1-mymote.IR_Y)* Screen.height,32,32), cursorOne);
 //			GUI.DrawTexture(new Rect(mymote.IR_X * Screen.width/2 + Screen.width/2 - Screen.width/10, (1-mymote.IR_Y)* Screen.height,32,32), cursorOne);
 
-//			if(toPresentMessage)
-//			{
-//				if(presentMessage.Equals(Message[0]))
-//				{
-//					GUI.Label(new Rect(Screen.width/2, Screen.height - Screen.height/4, 200, 20), presentMessage+": "+objectFrontName);
-//				}
-//				else
-//					GUI.Label(new Rect(Screen.width/2, Screen.height - Screen.height/4, 200, 20), presentMessage);
-//			}
-
+//			Remove this condi
 //			if(egm.ActivateSelectionMenu)
 //			{
 ////				RenderModelsMenu();
@@ -316,31 +275,13 @@ public class WiimoteTest : MonoBehaviour {
 			else if(grabbedObj != null)
 			{
 				Vector3 normalized_gun_vector = Vector3.Normalize(portalGun.forward);
-//				grabbedObject_distance = ;
 				float Nx = Camera.allCameras[0].transform.position.x + (normalized_gun_vector.x*grabbedObject_distance);
 				float Ny = Camera.allCameras[0].transform.position.y + (normalized_gun_vector.y*grabbedObject_distance);
 				float Nz = Camera.allCameras[0].transform.position.z + (normalized_gun_vector.z*grabbedObject_distance);
 				
 				grabbedObj.position = new Vector3(Nx,Ny,Nz);
-				
-//				Debug.Log("obj distance: "+grabbedObject_distance);
 			}
-//			Debug.Log(portalGun.transform.forward);
 		}
-//		Debug.Log(gun_dir);
-//		else 
-//		{
-//			if(message3D != null)
-//			{
-//				message3D.text = "";
-//				message3D.renderer.enabled = false;
-//	//			Debug.Log("");
-//	//			toPresentMessage = false;
-//			}
-//		}
-
-
-
 //		GUI.DrawTexture(new Rect(mymote.IR_X * Screen.width/2 + Screen.width/2 - Screen.width/10, (1-mymote.IR_Y)* Screen.height,32,32), cursorOne);
 	}
 
@@ -361,10 +302,6 @@ public class WiimoteTest : MonoBehaviour {
 		//read data from nunchuck analog
 		float value_y = egm.CurrentWiimote.NUNCHUK_JOY_Y_SPLIT;
 		float value_x = egm.CurrentWiimote.NUNCHUK_JOY_X_SPLIT;
-
-//		Debug.Log ("NUNCHUK_JOY_X_SPLIT: "+egm.CurrentWiimote.NUNCHUK_JOY_X_SPLIT);
-//		Debug.Log ("NUNCHUK_JOY_Y_SPLIT: "+egm.CurrentWiimote.NUNCHUK_JOY_Y_SPLIT);
-
 
 		//analog threshold of 0.5 on y-axis
 		if (Mathf.Abs(value_y) < 0.5f)
@@ -401,7 +338,7 @@ public class WiimoteTest : MonoBehaviour {
 		}
 	}
 
-	private void RenderWiimoteKeyStats()
+	/*private void RenderWiimoteKeyStats()
 	{
 		GUI.BeginGroup(new Rect(10,10, 180,500));
 		GUI.Box(new Rect(0,0,130,500), "Wiimote 1:");
@@ -439,12 +376,5 @@ public class WiimoteTest : MonoBehaviour {
 		GUI.Label(new Rect(5,460,160,20), "IR_X: " + egm.CurrentWiimote.IR_X.ToString());
 		GUI.Label(new Rect(5,480,160,20), "IR_Y: " + egm.CurrentWiimote.IR_Y.ToString());
 		GUI.EndGroup();
-	}
-
-//	private void RenderModelsMenu()
-//	{
-//		Debug.Log ("RenderModelsMenu activated");
-////		GUI.Label(new Rect(Screen.width/2, Screen.height/2, 200, 50), "CENAS E COISAS");
-//	}
-
+	}*/
 }

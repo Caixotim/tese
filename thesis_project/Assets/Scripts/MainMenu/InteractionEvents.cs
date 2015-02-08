@@ -49,4 +49,8 @@ public class InteractionEvents : MonoBehaviour {
 		}
 		//Debug.Log(sm.UserHeight);
 	}
+
+	public void ChangeController (int index) {
+		sm.SelectedController = (SimulationManager.Controller)index;
+	}
 }
