@@ -4,7 +4,7 @@ public class SimulationManager{
 
 	private static SimulationManager _instance = null;
 
-	//parameters to load simulation
+	//parameters to load map
 	private string mapPath;
 
 	//user preferences

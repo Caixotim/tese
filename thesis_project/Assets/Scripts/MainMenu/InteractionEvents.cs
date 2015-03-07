@@ -52,5 +52,6 @@ public class InteractionEvents : MonoBehaviour {
 
 	public void ChangeController (int index) {
 		sm.SelectedController = (SimulationManager.Controller)index;
+		Debug.Log(sm.SelectedController);
 	}
 }

@@ -7,16 +7,24 @@ public class HandleInteration : MonoBehaviour {
 	public GameObject cam;
 	private float object_distance;
 	private EditorGameManager egm;
-
-	// Use this for initialization
+	private SimulationManager sm;
+	
 	void Start () {
 		egm = EditorGameManager.Instance;
+		sm = SimulationManager.Instance;
 		mm = MenuManager.Instance;
 		object_distance = 10.0f;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+		if(sm.SelectedController == SimulationManager.Controller.wiiremote) {
+			NunchuckHandle();
+		} else if(sm.SelectedController == SimulationManager.Controller.keyboardMouse) {
+			KeyboardHandle();
+		}
+	}
+
+	private void NunchuckHandle() {
 		if (egm.CurrentWiimote.NUNCHUK_C == 1.0f) 
 		{
 			mm.IsToRenderMenu = !mm.IsToRenderMenu;
@@ -44,11 +52,12 @@ public class HandleInteration : MonoBehaviour {
 
 					//indicar posição a uma distancia de onde a "arma" está a apontar
 					mm.IsToRenderMenu = false;
-//					GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-//					cube.name = "CUBO";
-//					cube.transform.position = new Vector3(0,0,0);
 				}
 			}
 		}
+	}
+
+	private void KeyboardHandle() {
+
 	}
 }
