@@ -28,10 +28,10 @@ public class InteractionEvents : MonoBehaviour {
 		string[] loadMapText = new string[2];
 		string mapToLoad = "";//EditorUtility.OpenFilePanel ("Load Map" , Application.dataPath, ".map");
 		if(!string.IsNullOrEmpty(mapToLoad)) {
-			if(LoadMapButton.guiText.text.IndexOf(':') != -1) {
-				loadMapText = LoadMapButton.guiText.text.Split(':');
+			if(LoadMapButton.GetComponent<GUIText>().text.IndexOf(':') != -1) {
+				loadMapText = LoadMapButton.GetComponent<GUIText>().text.Split(':');
 				loadMapText[1] = mapToLoad;
-				LoadMapButton.guiText.text = loadMapText[0] + ":(" + loadMapText[1] + ")";
+				LoadMapButton.GetComponent<GUIText>().text = loadMapText[0] + ":(" + loadMapText[1] + ")";
 			}
 		}
 	}
