@@ -34,8 +34,9 @@
 				//to ensure that wiiremote is instanciated properly
 				while(true)
 				{
-					if(SetWiiMote ())
+					if(SetWiiMote ()) {
 						return;
+					}
 				}
 			}
 		}
@@ -49,8 +50,8 @@
 					NunchuckControls();
 				}
 			} else if (sm.SelectedController == SimulationManager.Controller.keyboardMouse) {
-				MouseAim();
-				KeyboardMovement();
+				MouseControls();
+				KeyboardControls();
 			}
 		}
 
@@ -83,7 +84,7 @@
 			if(Physics.Raycast(ray, out hit, 50.0f))
 			{
 				if(hit.transform.tag.Equals("furniture") && egm.CurrentWiimote.BUTTON_A == 1.0f) {
-					GrabDropFurniture grabDropObject = hit.transform.GetComponent<GrabDropFurniture>();
+					FurnitureHandler grabDropObject = hit.transform.GetComponent<FurnitureHandler>();
 
 					if(grabDropObject != null) {
 						if(grabbedObj == null)
@@ -109,7 +110,7 @@
 			Nunchuck_buttons ();
 		}
 
-		private void MouseAim()
+		private void MouseControls()
 		{
 			RaycastHit hit;
 			Vector3 mousePos = Input.mousePosition; 
@@ -124,7 +125,7 @@
 			if(Physics.Raycast(ray, out hit, 50.0f))
 			{
 				if(hit.transform.tag.Equals("furniture") && Input.GetMouseButtonDown(0)) {
-					GrabDropFurniture grabDropObject = hit.transform.GetComponent<GrabDropFurniture>();
+					FurnitureHandler grabDropObject = hit.transform.GetComponent<FurnitureHandler>();
 
 					if(grabDropObject != null) {
 						if(grabbedObj == null)
@@ -144,7 +145,7 @@
 			}
 		}
 
-		private void KeyboardMovement () {
+		private void KeyboardControls () {
 			float value_x = 0;
 			float value_y = 0;
 
@@ -166,17 +167,6 @@
 
 			//movevement
 			DirXform.Translate(0, 0, value_y * Time.deltaTime * PlayerMovementSpeed);
-		}
-
-		//Set Wiimote on EditorGameManager
-		public bool SetWiiMote()
-		{
-			if(receiver.wiimotes.ContainsKey(1))
-			{
-				egm.CurrentWiimote = receiver.wiimotes[1];
-				return true;
-			}
-			return false;
 		}
 
 		//Process nunchuck analog controls
@@ -218,5 +208,16 @@
 					//select model
 				}
 			}
+		}
+
+		//Set Wiimote on EditorGameManager
+		public bool SetWiiMote()
+		{
+			if(receiver.wiimotes.ContainsKey(1))
+			{
+				egm.CurrentWiimote = receiver.wiimotes[1];
+				return true;
+			}
+			return false;
 		}
 	}

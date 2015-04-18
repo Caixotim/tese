@@ -5,6 +5,7 @@ public class EditorGameManager{
 	private Wiimote detectedWiiMote;
 	private bool disableMenus;
 	private bool activateSelectionMenu;
+	private Furniture[] furnitures;
 	
 	private EditorGameManager()
 	{
@@ -55,6 +56,15 @@ public class EditorGameManager{
 		set
 		{
 			activateSelectionMenu = value;
+		}
+	}
+
+	public Furniture[] Furnitures {
+		get {
+			return this.furnitures;
+		}
+		set {
+			this.furnitures = value;
 		}
 	}
 }
