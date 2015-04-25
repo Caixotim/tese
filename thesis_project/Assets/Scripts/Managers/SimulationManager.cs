@@ -10,7 +10,7 @@ public class SimulationManager{
 	//user preferences
 	private static int userHeight;
 	public enum Controller {wiiremote, keyboardMouse};
-	private static Controller selectedController = Controller.wiiremote;
+	private static Controller selectedController = Controller.keyboardMouse;
 
 	private SimulationManager(){
 		//set default values
