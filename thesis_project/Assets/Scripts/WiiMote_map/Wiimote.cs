@@ -25,13 +25,27 @@ public class Wiimote {
 	private float m_pryRoll;
 	private float m_pryYaw;
 	private float m_pryAccel;
-	private float m_irX;
-	private float m_irY;
-	private float m_irSize;
 	private float m_AccX;
 	private float m_AccY;
 	private float m_AccZ;
-	
+
+	//Wiimote infrared:
+	private float m_irX;
+	private float m_irY;
+	private float m_irSize;
+	private float m_1_irX;
+	private float m_1_irY;
+	private float m_1_irSize;
+	private float m_2_irX;
+	private float m_2_irY;
+	private float m_2_irSize;
+	private float m_3_irX;
+	private float m_3_irY;
+	private float m_3_irSize;
+	private float m_4_irX;
+	private float m_4_irY;
+	private float m_4_irSize;
+
 	//Extensions:
 	// Nunchuk:
 	private float m_nunchukC;
@@ -73,9 +87,6 @@ public class Wiimote {
 	public float PRY_ROLL {get {return m_pryRoll; } }
 	public float PRY_YAW {get {return m_pryYaw; } }
 	public float PRY_ACCEL {get {return m_pryAccel; } }
-	public float IR_X {get {return m_irX;}}
-	public float IR_Y {get {return m_irY;}}
-	public float IR_SIZE {get {return m_irSize;}}
 	public float ACCX {get {return m_AccX; } }
 	public float ACCY {get {return m_AccY; } }
 	public float ACCZ {get {return m_AccZ; } }
@@ -99,8 +110,23 @@ public class Wiimote {
 	public float BALANCE_TOPLEFT {get {return m_balanceTL;}}
 	public float BALANCE_TOPRIGHT {get {return m_balanceTR;}}
 	public float BALANCE_SUM {get {return m_balanceSum;}}
-	
-	
+
+	public float IR_X {get {return m_irX;}}
+	public float IR_Y {get {return m_irY;}}
+	public float IR_SIZE {get {return m_irSize;}}
+	public float IR_1_X {get {return m_1_irX;}}
+	public float IR_1_Y {get {return m_1_irY;}}
+	public float IR_1_SIZE {get {return m_1_irSize;}}
+	public float IR_2_X {get {return m_2_irX;}}
+	public float IR_2_Y {get {return m_2_irY;}}
+	public float IR_2_SIZE {get {return m_2_irSize;}}
+	public float IR_3_X {get {return m_3_irX;}}
+	public float IR_3_Y {get {return m_3_irY;}}
+	public float IR_3_SIZE {get {return m_3_irSize;}}
+	public float IR_4_X {get {return m_4_irX;}}
+	public float IR_4_Y {get {return m_4_irY;}}
+	public float IR_4_SIZE {get {return m_4_irSize;}}
+
 	public Wiimote() {}
 	
 	public Wiimote(int id)
