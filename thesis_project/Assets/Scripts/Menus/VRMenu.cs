@@ -7,9 +7,7 @@ public class VRMenu : MonoBehaviour {
 	public GameObject block_prefab;
 	public GameObject cam;
 	private MenuManager mm;
-//	public GameObject cv;
 	private bool isRendered;
-//	private GameObject block;
 	private GameObject[] blocks;
 	private float menu_items_distance = 5.0f;
 
@@ -23,12 +21,12 @@ public class VRMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(mm.IsToRenderMenu && !isRendered)
+		if(mm.IsOnMenu && mm.ActivatedMenu == MenuManager.Menu.furniture_select)
 		{
 			DrawMenu();
 
 		}
-		else if(!mm.IsToRenderMenu && isRendered)
+		else if(!mm.IsOnMenu && isRendered)
 		{
 			foreach(GameObject block in blocks)
 			{
