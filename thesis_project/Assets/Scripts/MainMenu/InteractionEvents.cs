@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class InteractionEvents : MonoBehaviour {
 
 	private SimulationManager sm;
+	private int? userHeight = null;
 
 	// Use this for initialization
 	void Start () {
@@ -24,34 +25,30 @@ public class InteractionEvents : MonoBehaviour {
 		Application.LoadLevel("preferences");
 	}
 
-	public void LoadMap_ClickEvent (Button LoadMapButton) {
-		string[] loadMapText = new string[2];
-		string mapToLoad = "";//EditorUtility.OpenFilePanel ("Load Map" , Application.dataPath, ".map");
-		if(!string.IsNullOrEmpty(mapToLoad)) {
-			if(LoadMapButton.GetComponent<GUIText>().text.IndexOf(':') != -1) {
-				loadMapText = LoadMapButton.GetComponent<GUIText>().text.Split(':');
-				loadMapText[1] = mapToLoad;
-				LoadMapButton.GetComponent<GUIText>().text = loadMapText[0] + ":(" + loadMapText[1] + ")";
-			}
-		}
-	}
-
 	public void Back_ClickEvent () {
 		Application.LoadLevel("mainMenu");
 	}
 
 	public void ChangeUserHeight (InputField heightInput) {
 		if(heightInput.text.Length == 3) {
-			sm.UserHeight = int.Parse(heightInput.text);
+			int height = int.Parse(heightInput.text);
+			if(height >= 1.0f && height <= 2.9f) {
+				userHeight = int.Parse(heightInput.text);
+			}
+			else {
+				//invalid user input feedback
+			}
 		}
-		else {
-			sm.UserHeight = 170;
-		}
-		//Debug.Log(sm.UserHeight);
 	}
 
-	public void ChangeController (int index) {
-		sm.SelectedController = (SimulationManager.Controller)index;
-		Debug.Log(sm.SelectedController);
+	public void SaveUserHeight() {
+		if (userHeight != null) {
+			sm.UserHeight = (int)userHeight; 
+			Debug.Log(sm.UserHeight);
+		}
+	}
+
+	public void Quit() {
+		Application.Quit ();
 	}
 }
