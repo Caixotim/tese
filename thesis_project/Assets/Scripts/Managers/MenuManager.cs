@@ -22,18 +22,6 @@ public class MenuManager{
 		}
 	}
 
-	public bool IsOnMenu
-	{
-		get
-		{
-			return isOnMenu;
-		}
-		set
-		{
-			isOnMenu = value;
-		}
-	}
-
 	public Menu ActivatedMenu {
 		get {
 			return activatedMenu;
