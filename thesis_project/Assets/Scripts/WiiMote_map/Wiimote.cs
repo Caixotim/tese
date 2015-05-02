@@ -100,6 +100,28 @@ public class Wiimote {
 	public float BALANCE_TOPRIGHT {get {return m_balanceTR;}}
 	public float BALANCE_SUM {get {return m_balanceSum;}}
 	
+	public enum KeyCode {
+		BUTTON_A,
+		BUTTON_B,
+		BUTTON_MINUS,
+		BUTTON_PLUS,
+		BUTTON_ONE,
+		BUTTON_TWO,
+		BUTTON_UP,
+		BUTTON_DOWN,
+		BUTTON_LEFT,
+		BUTTON_RIGHT,
+		NUNCHUCK_C,
+		NUNCHUCK_Z,
+		NUNCHUCK_ANALOG_UP,
+		NUNCHUCK_ANALOG_DOWN,
+		NUNCHUCK_ANALOG_LEFT,
+		NUNCHUCK_ANALOG_RIGHT,
+		NONE
+	}
+	
+// 	private ArrayList <KeyCode> activeKeys = new ArrayList<KeyCode>();
+	private KeyCode currentKeyCode = KeyCode.NONE;
 	
 	public Wiimote() {}
 	
@@ -110,10 +132,6 @@ public class Wiimote {
 	
 	public void update(string oscMessage, ArrayList values, DateTime currentTime)
 	{
-		//TESTE CARLOS
-//		if(oscMessage.StartsWith("nunchuk/joy/"))
-//			Debug.Log(oscMessage +": 0: "+values[0]);
-
 		lastUpdate = currentTime;
 		// Analog Wiimote
 		switch (oscMessage)
@@ -207,128 +225,108 @@ public class Wiimote {
 //				Debug.LogError("Invalid message '" + oscMessage + "' from Osculator!!!");
 				break;
 		}
-//		if(oscMessage == "accel/pry")
-//		{
-//			m_pryPitch = (float)values[0];
-//			m_pryRoll = (float)values[1];
-//			m_pryYaw = (float)values[2];
-//			m_pryAccel = (float)values[3];
-//		}
-//		else if(oscMessage == "accel/xyz")
-//		{
-//			m_AccX = (float)values[0];
-//			m_AccY = (float)values[1];
-//			m_AccZ = (float)values[2];
-//		}
-//		else if(oscMessage == "ir")
-//		{
-//			m_irX = (float)values[0];
-//			m_irY = (float)values[1];
-//			//m_irSize = (float)values[2];
-//		}
-//		else if(oscMessage =="ir/xys/1")
-//		{
-//			m_irSize = (float)values[2];
-//		}
-		// Wiimote Buttons
-//		else if(oscMessage == "button/A")
-//		{
-//			m_buttonA = (float)values[0];
-//		}
-//		else if(oscMessage == "button/B")
-//		{
-//			m_buttonB = (float)values[0];
-//		}
-//		else if(oscMessage == "button/Left")
-//		{
-//			m_buttonLeft = (float)values[0];
-//		}
-//		else if(oscMessage == "button/Right")
-//		{
-//			m_buttonRight = (float)values[0];
-//		}
-//		else if(oscMessage == "button/Up")
-//		{
-//			m_buttonUp = (float)values[0];
-//		}
-//		else if(oscMessage == "button/Down")
-//		{
-//			m_buttonDown = (float)values[0];
-//		}
-//		else if(oscMessage == "button/Plus")
-//		{
-//			m_buttonPlus = (float)values[0];
-//		}
-//		else if(oscMessage == "button/Minus")
-//		{
-//			m_buttonMinus = (float)values[0];
-//		}
-//		else if(oscMessage == "button/1")
-//		{
-//			m_buttonOne = (float)values[0];
-//		}
-//		else if(oscMessage == "button/2")
-//		{
-//			m_buttonTwo = (float)values[0];
-//		}
-//		else if(oscMessage == "button/Home")
-//		{
-//			m_buttonHome = (float)values[0];
-//		}
-		// Balance Board analog
-//		else if(oscMessage == "balance")
-//		{
-//			m_balanceBL = (float)values[0];
-//			m_balanceBR = (float)values[1];
-//			m_balanceTL = (float)values[2];
-//			m_balanceTR = (float)values[3];
-//			m_balanceSum = (float)values[4];
-//		}
-		//Nunchuk
-//		else if(oscMessage == "nunchuk/button/C")
-//		{
-//			m_nunchukC = (float)values[0];
-//		}
-//		else if(oscMessage == "nunchuk/button/Z")
-//		{
-//			m_nunchukZ = (float)values[0];
-//		}
-//		else if(oscMessage == "nunchuk/joy") 
-//		{
-//			m_nunchukJoyX = (float)values[0];
-//			m_nunchukJoyY = (float)values[1];
-//		}
-//		else if(oscMessage == "nunchuk/joy/0")
-//        {
-//			//////
-////			Debug.Log("nunchuk/joy/0: " + values.Count);
-//
-//			m_nunchukJoyXSplit = (float) values[0];
-//
-//		}
-//		else if(oscMessage == "nunchuk/joy/1")
-//		{
-//			m_nunchukJoyYSplit = (float) values[0];
-//
-////			Debug.Log("nunchuk/joy/1: " + values.Count);
-//		}
-//		else if(oscMessage == "nunchuk/accel/pry")
-//		{
-//			m_nunchuckPitch = (float)values[0];
-//			m_nunchukRoll = (float)values[1];
-//			m_nunchukYaw = (float)values[2];
-//			m_nunchukAccel = (float)values[3];
-//		}
-//		else if(oscMessage == "nunchuk/accel/xyz")
-//		{
-//			m_nunchukAccX = (float)values[0];
-//			m_nunchukAccY = (float)values[1];
-//			m_nunchukAccZ = (float)values[2];
-//			
-//		}
-//		else{}
+	}
+	
+	public bool GetKeyPress(int keyCode) {
+		KeyCode newKeyCode = (KeyCode) keyCode;
+		bool isActive = false; 
+		
+		switch (newKeyCode) {
+		case KeyCode.BUTTON_A:
+			Debug.Log (m_buttonA);
+			if (BUTTON_A == 1.0f) {
+//				Debug.Log ("pressed A");
+				isActive = true;
+			}
+			break; 
+		case KeyCode.BUTTON_B:
+			if (m_buttonB == 1.0f) {
+//				Debug.Log ("pressed B");
+				isActive = true;
+			}
+			break;
+		case KeyCode.BUTTON_MINUS:
+			if (m_buttonMinus == 1.0f) {
+//				Debug.Log ("pressed Minus");
+				isActive = true;
+			}
+			break;
+		case KeyCode.BUTTON_UP:
+			if (m_buttonUp == 1.0f) {
+//				Debug.Log ("pressed Up");
+				isActive = true;
+			}
+			break;
+		case KeyCode.BUTTON_DOWN:
+			if (m_buttonDown == 1.0f) {
+//				Debug.Log ("pressed Down");
+				isActive = true;
+			}
+			break;
+		case KeyCode.BUTTON_LEFT:
+			if (m_buttonLeft == 1.0f) {
+//				Debug.Log ("pressed left");
+				isActive = true;
+			}
+			break;
+		case KeyCode.BUTTON_RIGHT:
+			if (m_buttonRight == 1.0f) {
+//				Debug.Log ("pressed right");
+				isActive = true;
+			}
+			break;
+		case KeyCode.NUNCHUCK_ANALOG_UP:
+			if (Mathf.Abs(m_nunchukJoyYSplit) > 0.5f && m_nunchukJoyYSplit > 0) {
+//				Debug.Log ("pressed analog up");
+				isActive = true;
+			}
+			break;
+		case KeyCode.NUNCHUCK_ANALOG_DOWN:
+			if (Mathf.Abs(m_nunchukJoyYSplit) > 0.5f && m_nunchukJoyYSplit < 0) {
+//				Debug.Log ("pressed analog down");
+				isActive = true;
+			}
+			break;
+		case KeyCode.NUNCHUCK_ANALOG_LEFT:
+			if (Mathf.Abs(m_nunchukJoyXSplit) > 0.5f && m_nunchukJoyXSplit < 0) {
+				// Debug.Log ("pressed analog left");
+				isActive = true;
+			}
+			break;
+		case KeyCode.NUNCHUCK_ANALOG_RIGHT:
+			if (Mathf.Abs(m_nunchukJoyXSplit) > 0.5f && m_nunchukJoyXSplit > 0) {
+				// Debug.Log ("pressed analog right");
+				isActive = true;
+			}
+			break;
+		case KeyCode.NUNCHUCK_C:
+			if (m_nunchukC == 1.0f) {
+//				Debug.Log ("pressed nunchuck C");
+				isActive = true;
+			}
+			else {
+				isActive = false;
+			}
+			break;
+		case KeyCode.NUNCHUCK_Z:
+			if (m_nunchukZ == 1.0f) {
+//				Debug.Log ("pressed nunchuck Z");
+				isActive = true;
+			}
+			break;
+		}
+
+		if (newKeyCode != currentKeyCode && isActive) {
+			currentKeyCode = newKeyCode;			
+			return true;
+		} else if (!isActive && currentKeyCode != KeyCode.NONE && newKeyCode == currentKeyCode) {
+			currentKeyCode = KeyCode.NONE;
+		}
+	 		
+		return false;
 	}
 }
+
 /*
 
 OSCulator - OSC messages. (All data between 0 and 1 float)
