@@ -98,59 +98,7 @@ public class ControlsHandler : MonoBehaviour
 	private void NunchuckControls ()
 	{
 		Nunchuck_analogs ();
-		// Nunchuck_buttons ();
 	}
-	
-	// private void MouseControls ()
-	// {
-	// 	RaycastHit hit;
-	// 	Vector3 mousePos = Input.mousePosition; 
-	// 	mousePos.z = 0.5f;
-	// 	Vector3 worldPos = Camera.allCameras [0].ScreenToWorldPoint (mousePos);
-		
-	// 	portalGun.LookAt (worldPos);
-		
-	// 	Ray ray = new Ray ();
-	// 	ray.origin = portalGun.position;
-	// 	ray.direction = portalGun.forward;
-	// 	if (Physics.Raycast (ray, out hit, 50.0f)) {
-	// 		if (hit.transform != null && hit.transform.tag.Equals ("furniture") && Input.GetMouseButtonDown (0)) {
-	// 			if (egm.GrabbedObject == null) { //if no object is grabbed
-	// 				FurnitureHandler objectHandler = hit.transform.GetComponent<FurnitureHandler> ();
-	// 				objectHandler.GrabFurniture (portalGun.transform);
-	// 			}
-	// 		}
-	// 	}
-	// 	if (Input.GetMouseButtonDown (0) && egm.GrabbedObject != null) { //if an object is grabbed
-	// 		FurnitureHandler grabDropObject = egm.GrabbedObject.GetComponent<FurnitureHandler> ();
-	// 		grabDropObject.DropFurniture ();
-	// 	}
-	// }
-	
-	// private void KeyboardControls ()
-	// {
-	// 	float value_x = 0;
-	// 	float value_y = 0;
-		
-	// 	//Y-axys movement
-	// 	if (Input.GetKey (KeyCode.W)) {
-	// 		value_y = 0.5f;
-	// 	} else if (Input.GetKey (KeyCode.S)) {
-	// 		value_y = -0.5f;
-	// 	}
-	// 	//Rotation
-	// 	if (Input.GetKey (KeyCode.A)) {
-	// 		value_x = -0.5f;
-	// 	} else if (Input.GetKey (KeyCode.D)) {
-	// 		value_x = 0.5f;
-	// 	}
-		
-	// 	//rotate player
-	// 	DirXform.Rotate (0, value_x * Time.deltaTime * PlayerRotationSpeed, 0);
-		
-	// 	//movevement
-	// 	DirXform.Translate (0, 0, value_y * Time.deltaTime * PlayerMovementSpeed);
-	// }
 	
 	//Process nunchuck analog controls
 	private void Nunchuck_analogs ()
