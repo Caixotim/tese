@@ -48,10 +48,10 @@ public class ControlsHandler : MonoBehaviour
 				WiiControls ();
 				NunchuckControls ();
 			}
-		} else if (sm.SelectedController == SimulationManager.Controller.keyboardMouse) {
+		} /*else if (sm.SelectedController == SimulationManager.Controller.keyboardMouse) {
 			MouseControls ();
 			KeyboardControls ();
-		}
+		}*/
 	}
 	
 	private void WiiControls ()
@@ -82,14 +82,14 @@ public class ControlsHandler : MonoBehaviour
 		ray.origin = portalGun.position;
 		ray.direction = portalGun.forward;
 		if (Physics.Raycast (ray, out hit, 50.0f)) {
-			if (hit.transform.tag.Equals ("furniture") && egm.CurrentWiimote.BUTTON_A == 1.0f) {
+			if (hit.transform.tag.Equals ("furniture") && egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.BUTTON_A) ) {
 				if (egm.GrabbedObject == null) {
 					FurnitureHandler grabDropObject = hit.transform.GetComponent<FurnitureHandler> ();
 					grabDropObject.GrabFurniture (portalGun.transform);
 				}
 			}
 		}
-		if (egm.CurrentWiimote.BUTTON_A == 1.0f && egm.GrabbedObject != null) {
+		if (egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.BUTTON_A) && egm.GrabbedObject != null) {
 			FurnitureHandler grabDropObject = egm.GrabbedObject.GetComponent<FurnitureHandler> ();
 			grabDropObject.DropFurniture ();
 		}
@@ -98,59 +98,59 @@ public class ControlsHandler : MonoBehaviour
 	private void NunchuckControls ()
 	{
 		Nunchuck_analogs ();
-		Nunchuck_buttons ();
+		// Nunchuck_buttons ();
 	}
 	
-	private void MouseControls ()
-	{
-		RaycastHit hit;
-		Vector3 mousePos = Input.mousePosition; 
-		mousePos.z = 0.5f;
-		Vector3 worldPos = Camera.allCameras [0].ScreenToWorldPoint (mousePos);
+	// private void MouseControls ()
+	// {
+	// 	RaycastHit hit;
+	// 	Vector3 mousePos = Input.mousePosition; 
+	// 	mousePos.z = 0.5f;
+	// 	Vector3 worldPos = Camera.allCameras [0].ScreenToWorldPoint (mousePos);
 		
-		portalGun.LookAt (worldPos);
+	// 	portalGun.LookAt (worldPos);
 		
-		Ray ray = new Ray ();
-		ray.origin = portalGun.position;
-		ray.direction = portalGun.forward;
-		if (Physics.Raycast (ray, out hit, 50.0f)) {
-			if (hit.transform != null && hit.transform.tag.Equals ("furniture") && Input.GetMouseButtonDown (0)) {
-				if (egm.GrabbedObject == null) { //if no object is grabbed
-					FurnitureHandler objectHandler = hit.transform.GetComponent<FurnitureHandler> ();
-					objectHandler.GrabFurniture (portalGun.transform);
-				}
-			}
-		}
-		if (Input.GetMouseButtonDown (0) && egm.GrabbedObject != null) { //if an object is grabbed
-			FurnitureHandler grabDropObject = egm.GrabbedObject.GetComponent<FurnitureHandler> ();
-			grabDropObject.DropFurniture ();
-		}
-	}
+	// 	Ray ray = new Ray ();
+	// 	ray.origin = portalGun.position;
+	// 	ray.direction = portalGun.forward;
+	// 	if (Physics.Raycast (ray, out hit, 50.0f)) {
+	// 		if (hit.transform != null && hit.transform.tag.Equals ("furniture") && Input.GetMouseButtonDown (0)) {
+	// 			if (egm.GrabbedObject == null) { //if no object is grabbed
+	// 				FurnitureHandler objectHandler = hit.transform.GetComponent<FurnitureHandler> ();
+	// 				objectHandler.GrabFurniture (portalGun.transform);
+	// 			}
+	// 		}
+	// 	}
+	// 	if (Input.GetMouseButtonDown (0) && egm.GrabbedObject != null) { //if an object is grabbed
+	// 		FurnitureHandler grabDropObject = egm.GrabbedObject.GetComponent<FurnitureHandler> ();
+	// 		grabDropObject.DropFurniture ();
+	// 	}
+	// }
 	
-	private void KeyboardControls ()
-	{
-		float value_x = 0;
-		float value_y = 0;
+	// private void KeyboardControls ()
+	// {
+	// 	float value_x = 0;
+	// 	float value_y = 0;
 		
-		//Y-axys movement
-		if (Input.GetKey (KeyCode.W)) {
-			value_y = 0.5f;
-		} else if (Input.GetKey (KeyCode.S)) {
-			value_y = -0.5f;
-		}
-		//Rotation
-		if (Input.GetKey (KeyCode.A)) {
-			value_x = -0.5f;
-		} else if (Input.GetKey (KeyCode.D)) {
-			value_x = 0.5f;
-		}
+	// 	//Y-axys movement
+	// 	if (Input.GetKey (KeyCode.W)) {
+	// 		value_y = 0.5f;
+	// 	} else if (Input.GetKey (KeyCode.S)) {
+	// 		value_y = -0.5f;
+	// 	}
+	// 	//Rotation
+	// 	if (Input.GetKey (KeyCode.A)) {
+	// 		value_x = -0.5f;
+	// 	} else if (Input.GetKey (KeyCode.D)) {
+	// 		value_x = 0.5f;
+	// 	}
 		
-		//rotate player
-		DirXform.Rotate (0, value_x * Time.deltaTime * PlayerRotationSpeed, 0);
+	// 	//rotate player
+	// 	DirXform.Rotate (0, value_x * Time.deltaTime * PlayerRotationSpeed, 0);
 		
-		//movevement
-		DirXform.Translate (0, 0, value_y * Time.deltaTime * PlayerMovementSpeed);
-	}
+	// 	//movevement
+	// 	DirXform.Translate (0, 0, value_y * Time.deltaTime * PlayerMovementSpeed);
+	// }
 	
 	//Process nunchuck analog controls
 	private void Nunchuck_analogs ()
@@ -172,22 +172,6 @@ public class ControlsHandler : MonoBehaviour
 			
 			//movevement
 			DirXform.Translate (0, 0, value_y * Time.deltaTime * PlayerMovementSpeed);
-		}
-	}
-	
-	private void Nunchuck_buttons ()
-	{
-		//present models menu
-		if (egm.CurrentWiimote.NUNCHUK_C == 1.0f) {
-			if (!egm.DisableMenus) {
-				egm.ActivateSelectionMenu = !egm.ActivateSelectionMenu;
-			}
-		}
-		//select viewed model control
-		if (egm.CurrentWiimote.NUNCHUK_Z == 1.0f) {
-			if (egm.ActivateSelectionMenu) {
-				//select model
-			}
 		}
 	}
 	
