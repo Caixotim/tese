@@ -9,7 +9,7 @@ public class PreferencesMenu : MonoBehaviour {
 	private MenuManager mm;
 	private Transform player;
 	private int userHeight;
-	private int height_delta = 10;
+	private int height_delta = 5;
 
 	void Start () {
 		egm = EditorGameManager.Instance;
@@ -17,6 +17,7 @@ public class PreferencesMenu : MonoBehaviour {
 		mm = MenuManager.Instance;
 		player = GameObject.Find("Player").transform;
 		userHeight = sm.UserHeight;
+		UpdateMenu();
 	}
 	
 	void Update () {
@@ -44,16 +45,16 @@ public class PreferencesMenu : MonoBehaviour {
 	}
 
 	private void WiimoteMenuHandle() {
-		if(mm.ActivatedMenu == MenuManager.Menu.user_preferences && egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.BUTTON_A)) {
+		if(mm.ActivatedMenu == MenuManager.Menu.user_preferences && egm.CurrentWiimote.BUTTON_A == 1.0f) {
 			ApplyChanges();
 		}
 	}
 
 	private void ApplyChanges() {
-		//user height
-		Debug.Log("New user height: " + userHeight/100.0f);
-		sm.UserHeight = userHeight;
-		player.transform.position = new Vector3(player.transform.position.x, sm.UserHeight/100.0f, player.transform.position.z);
+		if(userHeight != sm.UserHeight) {
+			sm.UserHeight = userHeight;
+			player.transform.position = new Vector3(player.transform.position.x, sm.UserHeight/100.0f, player.transform.position.z);
+		}
 	}
 
 	private void IncreaseHeight() {

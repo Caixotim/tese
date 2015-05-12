@@ -58,7 +58,6 @@ public class ControlsHandler : MonoBehaviour
 	{
 		float delta_x = egm.CurrentWiimote.PRY_YAW;
 		float delta_y = egm.CurrentWiimote.PRY_PITCH;
-		float delta_z = 0;
 		float? delta_x_prev = null;
 		float? delta_y_prev = null;
 		
@@ -76,22 +75,23 @@ public class ControlsHandler : MonoBehaviour
 		
 		portalGun.LookAt (crosshairPos);
 		
-		//apply raycast
-		RaycastHit hit;
-		Ray ray = new Ray ();
-		ray.origin = portalGun.position;
-		ray.direction = portalGun.forward;
-		if (Physics.Raycast (ray, out hit, 50.0f)) {
-			if (hit.transform.tag.Equals ("furniture") && egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.BUTTON_A) ) {
-				if (egm.GrabbedObject == null) {
-					FurnitureHandler grabDropObject = hit.transform.GetComponent<FurnitureHandler> ();
-					grabDropObject.GrabFurniture (portalGun.transform);
+		if(egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.BUTTON_A)) {
+			if(egm.GrabbedObject == null && mm.ActivatedMenu == MenuManager.Menu.none) {
+				//apply raycast
+				RaycastHit hit;
+				Ray ray = new Ray ();
+				ray.origin = portalGun.position;
+				ray.direction = portalGun.forward;
+				if (Physics.Raycast (ray, out hit, 50.0f)) {
+					 if(hit.transform.tag.Equals ("furniture")) {
+						FurnitureHandler grabDropObject = hit.transform.GetComponent<FurnitureHandler> ();
+						grabDropObject.GrabFurniture (portalGun.transform);
+					}
 				}
+			} else if (egm.GrabbedObject != null && mm.ActivatedMenu == MenuManager.Menu.none) {
+				FurnitureHandler grabDropObject = egm.GrabbedObject.GetComponent<FurnitureHandler> ();
+				grabDropObject.DropFurniture ();
 			}
-		}
-		if (egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.BUTTON_A) && egm.GrabbedObject != null) {
-			FurnitureHandler grabDropObject = egm.GrabbedObject.GetComponent<FurnitureHandler> ();
-			grabDropObject.DropFurniture ();
 		}
 	}
 	
