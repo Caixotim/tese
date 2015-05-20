@@ -11,7 +11,8 @@ public class ControlsHandler : MonoBehaviour
 	public Texture cursorOne;
 	public Transform portalGun;
 	private string objectFrontName;
-	private Transform DirXform;
+	private Transform PlayerBody;
+	private Transform PlayerHead;
 	private EditorGameManager egm;
 	private SimulationManager sm;
 	private MenuManager mm;
@@ -26,7 +27,8 @@ public class ControlsHandler : MonoBehaviour
 		receiver.connect ();
 		portalGun.forward = Vector3.Normalize (Vector3.forward);
 		
-		DirXform = GameObject.Find ("Player").transform;
+		PlayerBody = GameObject.Find ("Player").transform;
+		PlayerHead = GameObject.Find("Player/OVRPlayerController/OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
 		
 		/*Debug.Log (sm.SelectedController);*/
 		
@@ -116,10 +118,10 @@ public class ControlsHandler : MonoBehaviour
 				value_x = 0;
 			
 			//rotate player
-			DirXform.Rotate (0, value_x * Time.deltaTime * PlayerRotationSpeed, 0);
+			PlayerBody.Rotate (0, value_x * Time.deltaTime * PlayerRotationSpeed, 0);
 			
 			//movevement
-			DirXform.Translate (0, 0, value_y * Time.deltaTime * PlayerMovementSpeed);
+			PlayerBody.Translate (0, 0, value_y * Time.deltaTime * PlayerMovementSpeed);
 		}
 	}
 	
