@@ -9,6 +9,7 @@ public class EditorGameManager{
 	private Furniture[] furnitures;
 	private bool isGrabbingObject = false;
 	private GameObject grabbedObject = null;
+	private float budget = 0;
 	
 	private EditorGameManager()
 	{
@@ -86,6 +87,15 @@ public class EditorGameManager{
 		}
 		set {
 			grabbedObject = value;
+		}
+	}
+
+	public float Budget {
+		get {
+			return budget;
+		}
+		set {
+			budget = value;
 		}
 	}
 }
