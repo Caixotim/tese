@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 3d4f86d380121440ba031dc7172ab39a
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 18
   fileIDToRecycleName:
     100000: Arm_1
     100002: Battery_Housing
@@ -37,6 +37,14 @@ ModelImporter:
     100062: Symmetrie_Arm_11 pNEUMATIC Pneumatic_2_MeshPart2
     100064: Ventilation_Grid
     100066: White_Shell_1
+    100068: Symmetrie_Arm_11_Arm_2
+    100070: Symmetrie_Arm_11_Holding_Device_2
+    100072: Symmetrie_Arm_11_Lamp1
+    100074: Symmetrie_Arm_11_Light1
+    100076: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2
+    100078: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart0
+    100080: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart1
+    100082: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart2
     400000: Arm_1
     400002: Battery_Housing
     400004: Cable
@@ -71,6 +79,14 @@ ModelImporter:
     400062: Symmetrie_Arm_11 pNEUMATIC Pneumatic_2_MeshPart2
     400064: Ventilation_Grid
     400066: White_Shell_1
+    400068: Symmetrie_Arm_11_Arm_2
+    400070: Symmetrie_Arm_11_Holding_Device_2
+    400072: Symmetrie_Arm_11_Lamp1
+    400074: Symmetrie_Arm_11_Light1
+    400076: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2
+    400078: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart0
+    400080: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart1
+    400082: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart2
     2300000: Arm_1
     2300002: Battery_Housing
     2300004: Cable_MeshPart0
@@ -101,6 +117,13 @@ ModelImporter:
     2300054: Symmetrie_Arm_11 pNEUMATIC Pneumatic_2_MeshPart2
     2300056: Ventilation_Grid
     2300058: White_Shell_1
+    2300060: Symmetrie_Arm_11_Arm_2
+    2300062: Symmetrie_Arm_11_Holding_Device_2
+    2300064: Symmetrie_Arm_11_Lamp1
+    2300066: Symmetrie_Arm_11_Light1
+    2300068: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart0
+    2300070: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart1
+    2300072: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart2
     3300000: Arm_1
     3300002: Battery_Housing
     3300004: Cable_MeshPart0
@@ -131,6 +154,13 @@ ModelImporter:
     3300054: Symmetrie_Arm_11 pNEUMATIC Pneumatic_2_MeshPart2
     3300056: Ventilation_Grid
     3300058: White_Shell_1
+    3300060: Symmetrie_Arm_11_Arm_2
+    3300062: Symmetrie_Arm_11_Holding_Device_2
+    3300064: Symmetrie_Arm_11_Lamp1
+    3300066: Symmetrie_Arm_11_Light1
+    3300068: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart0
+    3300070: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart1
+    3300072: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart2
     4300000: Arm_1
     4300002: Battery_Housing_MeshPart0
     4300004: Cable_MeshPart0
@@ -161,6 +191,14 @@ ModelImporter:
     4300054: Symmetrie_Arm_11 pNEUMATIC Pneumatic_2_MeshPart2
     4300056: Ventilation_Grid
     4300058: White_Shell_1
+    4300060: Battery_Housing
+    4300062: Symmetrie_Arm_11_Arm_2
+    4300064: Symmetrie_Arm_11_Holding_Device_2
+    4300066: Symmetrie_Arm_11_Lamp1
+    4300068: Symmetrie_Arm_11_Light1
+    4300070: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart0
+    4300072: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart1
+    4300074: Symmetrie_Arm_11_pNEUMATIC_Pneumatic_2_MeshPart2
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -189,11 +227,13 @@ ModelImporter:
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
@@ -216,3 +256,5 @@ ModelImporter:
   animationType: 2
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 
