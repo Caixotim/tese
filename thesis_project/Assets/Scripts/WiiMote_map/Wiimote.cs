@@ -120,8 +120,8 @@ public class Wiimote {
 		NONE
 	}
 	
-// 	private ArrayList <KeyCode> activeKeys = new ArrayList<KeyCode>();
 	private KeyCode currentKeyCode = KeyCode.NONE;
+	private bool isCurrentKeyCodeActive = false;
 	
 	public Wiimote() {}
 	
@@ -233,70 +233,92 @@ public class Wiimote {
 		
 		switch (newKeyCode) {
 		case KeyCode.BUTTON_A:
-			Debug.Log (m_buttonA);
-			if (BUTTON_A == 1.0f) {
+			// Debug.Log (m_buttonA);
+			if (m_buttonA == 1.0f) {
 //				Debug.Log ("pressed A");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break; 
 		case KeyCode.BUTTON_B:
 			if (m_buttonB == 1.0f) {
 //				Debug.Log ("pressed B");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.BUTTON_MINUS:
 			if (m_buttonMinus == 1.0f) {
 //				Debug.Log ("pressed Minus");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.BUTTON_UP:
 			if (m_buttonUp == 1.0f) {
 //				Debug.Log ("pressed Up");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.BUTTON_DOWN:
 			if (m_buttonDown == 1.0f) {
 //				Debug.Log ("pressed Down");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.BUTTON_LEFT:
 			if (m_buttonLeft == 1.0f) {
 //				Debug.Log ("pressed left");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.BUTTON_RIGHT:
 			if (m_buttonRight == 1.0f) {
 //				Debug.Log ("pressed right");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.NUNCHUCK_ANALOG_UP:
 			if (Mathf.Abs(m_nunchukJoyYSplit) > 0.5f && m_nunchukJoyYSplit > 0) {
 //				Debug.Log ("pressed analog up");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.NUNCHUCK_ANALOG_DOWN:
 			if (Mathf.Abs(m_nunchukJoyYSplit) > 0.5f && m_nunchukJoyYSplit < 0) {
 //				Debug.Log ("pressed analog down");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.NUNCHUCK_ANALOG_LEFT:
 			if (Mathf.Abs(m_nunchukJoyXSplit) > 0.5f && m_nunchukJoyXSplit < 0) {
 				// Debug.Log ("pressed analog left");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.NUNCHUCK_ANALOG_RIGHT:
 			if (Mathf.Abs(m_nunchukJoyXSplit) > 0.5f && m_nunchukJoyXSplit > 0) {
 				// Debug.Log ("pressed analog right");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		case KeyCode.NUNCHUCK_C:
@@ -312,17 +334,31 @@ public class Wiimote {
 			if (m_nunchukZ == 1.0f) {
 //				Debug.Log ("pressed nunchuck Z");
 				isActive = true;
+			} else {
+				isActive = false;
 			}
 			break;
 		}
 
 		if (newKeyCode != currentKeyCode && isActive) {
-			currentKeyCode = newKeyCode;			
+			Debug.Log('1');
+			currentKeyCode = newKeyCode;
+			isCurrentKeyCodeActive = true;
 			return true;
 		} else if (!isActive && currentKeyCode != KeyCode.NONE && newKeyCode == currentKeyCode) {
+			Debug.Log('2');
 			currentKeyCode = KeyCode.NONE;
+			isCurrentKeyCodeActive = false;
+			return false;
+		} else if (newKeyCode == currentKeyCode && !isActive) {
+			Debug.Log('3');
+			isCurrentKeyCodeActive = false;
+			return false;
+		} else if (newKeyCode == currentKeyCode && isActive && !isCurrentKeyCodeActive) {
+			Debug.Log('4');
+			return true;
 		}
-	 		
+		// Debug.Log('5');
 		return false;
 	}
 }
