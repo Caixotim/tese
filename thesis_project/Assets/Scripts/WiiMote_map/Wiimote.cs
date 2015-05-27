@@ -341,12 +341,12 @@ public class Wiimote {
 		}
 
 		if (newKeyCode != currentKeyCode && isActive) {
-			Debug.Log('1');
+			// Debug.Log('1');
 			currentKeyCode = newKeyCode;
 			isCurrentKeyCodeActive = true;
 			return true;
 		} else if (!isActive && currentKeyCode != KeyCode.NONE && newKeyCode == currentKeyCode) {
-			Debug.Log('2');
+			// Debug.Log('2');
 			currentKeyCode = KeyCode.NONE;
 			isCurrentKeyCodeActive = false;
 			return false;
