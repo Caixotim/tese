@@ -7,15 +7,15 @@ public class SelectInteraction : MonoBehaviour {
 	private Vector3 modelInitialPos = new Vector3(0.74f, 2.0f, 7.28f);
 	private Quaternion modelInitialRotation = Quaternion.identity;
 	private int selectedFurnitureIndex = 0;
-	private string furniturePath = "/Furniture/Models/";
+	private string furniturePath = "Assets/Resources/Furniture/Models/";
 
 	public void Start () {
 		egm = EditorGameManager.Instance;
 		CreateFurniture();
 	}
 
-	public void ToggleAction () {
-		switch(this.gameObject.name) {
+	public void ToggleAction (string objectName) {
+		switch(objectName) {
 			case "Select_Right":
 				ToggleSelectRight();
 				break;
@@ -32,10 +32,11 @@ public class SelectInteraction : MonoBehaviour {
 		selectedFurnitureIndex++;
 		if (selectedFurnitureIndex > egm.Furnitures.Length - 1) {
 			selectedFurnitureIndex = 0;
-			DestroyImmediate(GameObject.Find(egm.Furnitures[egm.Furnitures.Length].Name));
+			DestroyImmediate(GameObject.Find((egm.Furnitures.Length - 1) + "_selection"), false);
 		} else {
-			DestroyImmediate(GameObject.Find(egm.Furnitures[selectedFurnitureIndex - 1].Name));
+			DestroyImmediate(GameObject.Find((selectedFurnitureIndex) + "_selection"), false);
 		}
+		CreateFurniture();
 
 		Debug.Log("Select_Right");
 	}
@@ -47,10 +48,11 @@ public class SelectInteraction : MonoBehaviour {
 		selectedFurnitureIndex--;
 		if (selectedFurnitureIndex < 0) {
 			selectedFurnitureIndex = egm.Furnitures.Length - 1;
-			DestroyImmediate(GameObject.Find(egm.Furnitures[0].Name));
+			DestroyImmediate(GameObject.Find(0 + "_selection"), false);
 		} else {
-			DestroyImmediate(GameObject.Find(egm.Furnitures[selectedFurnitureIndex].Name));
+			DestroyImmediate(GameObject.Find((selectedFurnitureIndex) + "_selection"), false);
 		}
+		CreateFurniture();
 
 		Debug.Log("Select_Left");
 	}
@@ -58,12 +60,12 @@ public class SelectInteraction : MonoBehaviour {
 	private void CreateFurniture() {
 		//Find furniture in resources folder
 		string furnitureItem = "" + (selectedFurnitureIndex + 1);
-		string fullPath = furniturePath + furnitureItem + "/" + furnitureItem;
-		GameObject furniture = Resources.Load<GameObject> (fullPath);
+		string fullPath = furniturePath + furnitureItem + "/" + furnitureItem + ".prefab";
+		GameObject furniture = (GameObject)Resources.LoadAssetAtPath(fullPath, typeof(GameObject));
 		Debug.Log("full path: " + fullPath + "\n funiture: " + furniture);
-		furniture.name = "" + selectedFurnitureIndex;
 
 		GameObject createdFurniture = (GameObject) Instantiate (furniture, modelInitialPos, modelInitialRotation);
+		createdFurniture.name = "" + selectedFurnitureIndex + "_selection";
 		FurnitureHandler fh = createdFurniture.GetComponent<FurnitureHandler> ();
 		fh.SetFurniture (egm.Furnitures [selectedFurnitureIndex]);
 	}
