@@ -34,11 +34,9 @@ public class SelectInteraction : MonoBehaviour {
 			selectedFurnitureIndex = 0;
 			DestroyImmediate(GameObject.Find((egm.Furnitures.Length - 1) + "_selection"), false);
 		} else {
-			DestroyImmediate(GameObject.Find((selectedFurnitureIndex) + "_selection"), false);
+			DestroyImmediate(GameObject.Find((selectedFurnitureIndex - 1) + "_selection"), false);
 		}
 		CreateFurniture();
-
-		Debug.Log("Select_Right");
 	}
 
 	private void ToggleSelectLeft () {
@@ -50,11 +48,9 @@ public class SelectInteraction : MonoBehaviour {
 			selectedFurnitureIndex = egm.Furnitures.Length - 1;
 			DestroyImmediate(GameObject.Find(0 + "_selection"), false);
 		} else {
-			DestroyImmediate(GameObject.Find((selectedFurnitureIndex) + "_selection"), false);
+			DestroyImmediate(GameObject.Find((selectedFurnitureIndex + 1) + "_selection"), false);
 		}
 		CreateFurniture();
-
-		Debug.Log("Select_Left");
 	}
 
 	private void CreateFurniture() {
