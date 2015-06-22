@@ -57,9 +57,8 @@ public class SelectInteraction : MonoBehaviour {
 		//Find furniture in resources folder
 		string furnitureItem = "" + (selectedFurnitureIndex + 1);
 		string fullPath = furniturePath + furnitureItem + "/" + furnitureItem + ".prefab";
-		GameObject furniture = (GameObject)Resources.LoadAssetAtPath(fullPath, typeof(GameObject));
-		Debug.Log("full path: " + fullPath + "\n funiture: " + furniture);
 
+		GameObject furniture = (GameObject)Resources.LoadAssetAtPath(fullPath, typeof(GameObject));
 		GameObject createdFurniture = (GameObject) Instantiate (furniture, modelInitialPos, modelInitialRotation);
 		createdFurniture.name = "" + selectedFurnitureIndex + "_selection";
 		FurnitureHandler fh = createdFurniture.GetComponent<FurnitureHandler> ();
