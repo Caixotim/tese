@@ -69,13 +69,14 @@ public class PreferencesMenu : MonoBehaviour {
 
 	private void UpdateMenu() {
 		Text height_txt = GameObject.Find("Menu_Preferences/Item_block/Body/Panel/Value").GetComponent<Text>();
-		height_txt.text = ""+userHeight;
+		height_txt.text = "" + userHeight;
 	}
 
 	private void ToggleMenu() {
 		Canvas cv = GameObject.Find("Menu_Preferences/Item_block").GetComponent<Canvas>();
 		cv.enabled = !cv.enabled;
 		if(cv.enabled) {
+			userHeight = sm.UserHeight;
 			UpdateMenu();
 			mm.ActivatedMenu = MenuManager.Menu.user_preferences;
 		} else {
