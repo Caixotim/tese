@@ -35,10 +35,10 @@ public class PreferencesMenu : MonoBehaviour {
 		}
 
 		if(mm.ActivatedMenu == MenuManager.Menu.user_preferences) {
-			if(egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.NUNCHUCK_ANALOG_UP)) {
+			if(egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.NUNCHUCK_ANALOG_RIGHT)) {
 				IncreaseHeight();
 			}
-			if(egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.NUNCHUCK_ANALOG_DOWN)) {
+			if(egm.CurrentWiimote.GetKeyPress((int)Wiimote.KeyCode.NUNCHUCK_ANALOG_LEFT)) {
 				DecreaseHeight();
 			}
 		}
