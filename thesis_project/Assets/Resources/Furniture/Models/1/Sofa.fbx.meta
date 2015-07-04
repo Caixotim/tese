@@ -1,42 +1,58 @@
 fileFormatVersion: 2
-guid: cc3863ce86f7441a799826f943d75522
-timeCreated: 1431890472
+guid: b217f087ba4ce4e49a56bf44e9f4d450
+timeCreated: 1436027034
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: Camera
-    100002: //RootNode
-    100004: Cylinder.002
-    100006: Lamp
-    100008: Lamp.001
-    100010: Plane
-    100012: Plane.001
-    100014: Plane.002
+    100002: Circle
+    100004: Cube
+    100006: Cube.001
+    100008: Cube.001_MeshPart0
+    100010: Cube.001_MeshPart1
+    100012: Cube.002
+    100014: Cube.002_MeshPart0
+    100016: Cube.002_MeshPart1
+    100018: Cube.002_MeshPart2
+    100020: Plane
+    100022: //RootNode
     400000: Camera
-    400002: //RootNode
-    400004: Cylinder.002
-    400006: Lamp
-    400008: Lamp.001
-    400010: Plane
-    400012: Plane.001
-    400014: Plane.002
-    2300000: Cylinder.002
-    2300002: Plane
-    2300004: Plane.001
-    2300006: Plane.002
-    3300000: Cylinder.002
-    3300002: Plane
-    3300004: Plane.001
-    3300006: Plane.002
-    4300000: Cylinder.002
-    4300002: Plane.002
-    4300004: Plane.001
-    4300006: Plane
-    6400000: Cylinder.002
-    6400002: Plane
-    6400004: Plane.001
-    6400006: Plane.002
+    400002: Circle
+    400004: Cube
+    400006: Cube.001
+    400008: Cube.001_MeshPart0
+    400010: Cube.001_MeshPart1
+    400012: Cube.002
+    400014: Cube.002_MeshPart0
+    400016: Cube.002_MeshPart1
+    400018: Cube.002_MeshPart2
+    400020: Plane
+    400022: //RootNode
+    2300000: Circle
+    2300002: Cube
+    2300004: Cube.001_MeshPart0
+    2300006: Cube.001_MeshPart1
+    2300008: Cube.002_MeshPart0
+    2300010: Cube.002_MeshPart1
+    2300012: Cube.002_MeshPart2
+    2300014: Plane
+    3300000: Circle
+    3300002: Cube
+    3300004: Cube.001_MeshPart0
+    3300006: Cube.001_MeshPart1
+    3300008: Cube.002_MeshPart0
+    3300010: Cube.002_MeshPart1
+    3300012: Cube.002_MeshPart2
+    3300014: Plane
+    4300000: Circle
+    4300002: Plane
+    4300004: Cube.002_MeshPart0
+    4300006: Cube.002_MeshPart1
+    4300008: Cube.002_MeshPart2
+    4300010: Cube.001_MeshPart0
+    4300012: Cube.001_MeshPart1
+    4300014: Cube
   materials:
     importMaterials: 1
     materialName: 0
@@ -62,7 +78,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
