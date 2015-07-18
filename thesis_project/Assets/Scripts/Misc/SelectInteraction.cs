@@ -8,9 +8,11 @@ public class SelectInteraction : MonoBehaviour {
 	private Quaternion modelInitialRotation = Quaternion.identity;
 	private int selectedFurnitureIndex = 0;
 	private string furniturePath = "Assets/Resources/Furniture/Models/";
+	private TextMesh furnitureNameTextMesh;
 
 	public void Start () {
 		egm = EditorGameManager.Instance;
+		furnitureNameTextMesh = GameObject.Find("Selection_Box/Furniture_Name").GetComponent<TextMesh>();
 		CreateFurniture();
 	}
 
@@ -53,7 +55,7 @@ public class SelectInteraction : MonoBehaviour {
 		CreateFurniture();
 	}
 
-	private void CreateFurniture() {
+	public void CreateFurniture() {
 		//Find furniture in resources folder
 		string furnitureItem = "" + (selectedFurnitureIndex + 1);
 		string fullPath = furniturePath + furnitureItem + "/" + furnitureItem + ".prefab";
@@ -63,5 +65,11 @@ public class SelectInteraction : MonoBehaviour {
 		createdFurniture.name = "" + selectedFurnitureIndex + "_selection";
 		FurnitureHandler fh = createdFurniture.GetComponent<FurnitureHandler> ();
 		fh.SetFurniture (egm.Furnitures [selectedFurnitureIndex]);
+
+		UpdateFurnitureNameLabel(fh.furniture.Name);
+	}
+
+	private void UpdateFurnitureNameLabel(string furnitureName) {
+		furnitureNameTextMesh.text = furnitureName;
 	}
 }

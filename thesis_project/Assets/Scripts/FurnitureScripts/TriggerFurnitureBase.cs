@@ -4,9 +4,11 @@ using System.Collections;
 public class TriggerFurnitureBase : MonoBehaviour {
 
 	private SimulationManager sm;
+	private SelectInteraction selectionManager;
 
 	void Start() {
 		sm = SimulationManager.Instance;
+		selectionManager = GameObject.Find("InteractionsHandler").GetComponent<SelectInteraction>();
 	}
 
 	void OnTriggerExit(Collider other) {
@@ -16,7 +18,7 @@ public class TriggerFurnitureBase : MonoBehaviour {
 			enteredGameObject.name = newName[0];
 			IncreaseBudget(enteredGameObject.GetComponent<FurnitureHandler>().furniture.Price);
 
-			//DUPLICATE FURNITURE
+			selectionManager.CreateFurniture();
 		}
 	}
 
