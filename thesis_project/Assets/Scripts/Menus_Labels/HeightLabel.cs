@@ -17,9 +17,9 @@ public class HeightLabel : MonoBehaviour {
 
 	private void UpdateHeightLabel() {
 		string height = "";
-		if (egm.GrabbedObject != null && egm.GrabbedObject.transform.name.Equals("height_pointer")) {
+		// if (egm.GrabbedObject != null && egm.GrabbedObject.transform.name.Equals("height_pointer")) {
 			height = ""+sm.UserHeight;
-		}
+		// }
 
 		this.GetComponent<TextMesh>().text = height;
 	}
