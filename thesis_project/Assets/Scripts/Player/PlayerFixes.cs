@@ -23,6 +23,7 @@ public class PlayerFixes : MonoBehaviour {
 			 if(hit.transform.tag.Equals ("floor")) {
 			 	Transform floorObj = hit.transform;
 				this.transform.position = new Vector3 (this.transform.position.x, hit.transform.position.y + sm.UserHeight, this.transform.position.z);
+				Debug.Log("player height = " + this.transform.position.y);
 			}
 		}
 	}
