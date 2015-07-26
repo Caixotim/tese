@@ -11,7 +11,7 @@ public class FurnitureHandler : MonoBehaviour {
 	private List<GameObject> objectsAttached = new List<GameObject>();
 	
 	void Start () {
-		furnitureHeight = /*this.gameObject.transform.localScale.y*/this.gameObject.GetComponent<BoxCollider>().bounds.size.y;
+		furnitureHeight = this.gameObject.GetComponent<BoxCollider>().bounds.size.y;
 	}
 
 	void Awake () {
@@ -78,11 +78,11 @@ public class FurnitureHandler : MonoBehaviour {
 		Vector3 newPosition = Vector3.zero;
 		// Debug.Log("Enter");
 		if(other.transform.name == "Floor") {
-			newPosition = new Vector3(transform.position.x, furnitureHeight/2, transform.position.z);
+			newPosition = new Vector3(transform.position.x, (furnitureHeight/2.0f), transform.position.z);
 		} else if(other.transform.tag == "furniture") {
 			float bottomObjectPosY = other.transform.position.y;
-			float objectHeight = /*other.gameObject.transform.localScale.y * */other.gameObject.GetComponent<BoxCollider>().bounds.size.y;
-			newPosition = new Vector3(transform.position.x, bottomObjectPosY + (furnitureHeight/2) + (objectHeight/2), transform.position.z);
+			float objectHeight = other.gameObject.GetComponent<BoxCollider>().bounds.size.y;
+			newPosition = new Vector3(transform.position.x, bottomObjectPosY + (furnitureHeight/2.0f) + (objectHeight/2.0f), transform.position.z);
 		}
 		this.gameObject.transform.position = newPosition;
 	}
@@ -91,8 +91,10 @@ public class FurnitureHandler : MonoBehaviour {
 		if (egm.GrabbedObject == this.gameObject) {
 			this.gameObject.transform.GetComponent<Rigidbody> ().velocity = Vector3.zero;
 			this.gameObject.transform.GetComponent<Rigidbody> ().angularVelocity = Vector3.zero;
+			AdjustHeight();
 		}
-		AdjustHeight();
+		//Fix so that object does not rotate
+		this.gameObject.transform.up = Vector3.up;
 	}
 
 	private void AdjustHeight() {
@@ -100,14 +102,14 @@ public class FurnitureHandler : MonoBehaviour {
 			RaycastHit hit;
 			Vector3 newPosition = Vector3.zero;
 			if (Physics.Raycast(transform.position, -Vector3.up, out hit)) {
-				if(hit.transform.name == "Floor") {
+				if(hit.transform.tag.Equals("floor")) {
 					// Debug.Log("AdjustHeight - Floor");
-					newPosition = new Vector3(this.transform.position.x, furnitureHeight/2, this.transform.position.z);
-				} else if(hit.transform.tag == "furniture"){
+					newPosition = new Vector3(this.transform.position.x, furnitureHeight/2.0f, this.transform.position.z);
+				} else if(hit.transform.tag.Equals("furniture")) {
 					// Debug.Log("AdjustHeight - Furniture");
 					float bottomObjectPosY = hit.transform.position.y;
-					float bottomObjectHeight = (float) /*hit.transform.localScale.y * */ hit.transform.gameObject.GetComponent<BoxCollider>().bounds.size.y;
-					newPosition = new Vector3(this.transform.position.x, bottomObjectPosY + (furnitureHeight/2) + (bottomObjectHeight/2), this.transform.position.z);
+					float bottomObjectHeight = (float) hit.transform.gameObject.GetComponent<BoxCollider>().bounds.size.y;
+					newPosition = new Vector3(this.transform.position.x, bottomObjectPosY + (furnitureHeight/2.0f) + (bottomObjectHeight/2.0f), this.transform.position.z);
 				}
 				this.transform.position = newPosition;
 			}
@@ -116,12 +118,12 @@ public class FurnitureHandler : MonoBehaviour {
 
 	public void GrabObjectsOnTop () {
 		RaycastHit[] hits;
-		hits = Physics.RaycastAll(this.gameObject.transform.position, Vector3.up, 50.0f);
+		hits = Physics.RaycastAll(this.gameObject.transform.position, this.gameObject.transform.up, 50.0f);
 
-		Debug.Log(this.gameObject.transform.name);
+		// Debug.Log(this.gameObject.transform.name);
 		foreach (RaycastHit topObj in hits) {
-			// Debug.Log("hit: " + topObj.transform.name);
-			if (topObj.transform.tag == "furniture") {
+			Debug.Log("hit: " + topObj.transform.name);
+			if (topObj.transform.tag.Equals("furniture")) {
 				objectsAttached.Add(topObj.transform.gameObject);
 				topObj.transform.SetParent(this.gameObject.transform);
 			}
