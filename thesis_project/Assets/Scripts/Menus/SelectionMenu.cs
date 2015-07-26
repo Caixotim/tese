@@ -34,7 +34,7 @@ public class SelectionMenu : MonoBehaviour {
 				//create furniture in front of user
 				Furniture selectedFurniture = egm.Furnitures[currentFurnitureIndex];
 
-				GameObject newGameObject = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Resources/Furniture/Models/"+selectedFurniture.Id+"/"+selectedFurniture.Id+".prefab", typeof(GameObject));
+				GameObject newGameObject = (GameObject)Resources.Load("Furniture/Models/"+selectedFurniture.Id+"/"+selectedFurniture.Id, typeof(GameObject));
 
 				var object_position = cam.transform.position+(cam.transform.forward*2)*object_distance;
 				object_position = new Vector3(object_position.x, 0.5f, object_position.z);
@@ -82,7 +82,7 @@ public class SelectionMenu : MonoBehaviour {
 		price_txt.text = "PREÇO" + ": " + furnitureData.Price + furnitureData.Currency;
 
 		Image image_img = GameObject.Find ("Menu_Selection/Item_block/Body/Image").GetComponent<Image> ();
-		image_img.overrideSprite = (Sprite)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Resources/Furniture/Images/"+furnitureData.Id+".jpeg", typeof(Sprite));
+		image_img.overrideSprite = (Sprite)Resources.Load("Furniture/Images/"+furnitureData.Id, typeof(Sprite));
 	}
 
 	private void NextFurniture (){
