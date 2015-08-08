@@ -3,8 +3,9 @@
 public class MenuManager {
 
 	private static MenuManager _instance = null;
-	public enum Menu {user_preferences, furniture_select, furniture_properties, none};
+	public enum Menu {user_preferences, furniture_select, none};
 	private static Menu activatedMenu = Menu.none;
+	private static bool canDrawMenu = true;
 
 	private MenuManager() {
 
@@ -25,6 +26,15 @@ public class MenuManager {
 		}
 		set {
 			activatedMenu = value;
+		}
+	}
+
+	public bool CanDrawMenu {
+		get {
+			return canDrawMenu;
+		}
+		set {
+			canDrawMenu = value;
 		}
 	}
 }
