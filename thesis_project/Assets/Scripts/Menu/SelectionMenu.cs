@@ -6,7 +6,6 @@ public class SelectionMenu : MonoBehaviour {
 	private EditorGameManager egm;
 	private MenuManager mm;
 	private int selectedFurnitureIndex;
-	private float distanceToFurnitureSelect = 1.5f;
 	private bool drawnMenu = false;
 	private Vector3 furnitureSelectPos = Vector3.zero;
 	private Transform player;
@@ -80,6 +79,15 @@ public class SelectionMenu : MonoBehaviour {
 			//clean previous object
 			CleanPreviousFurniture();
 
+			//save previous label direction
+			GameObject label = GameObject.Find("Furniture_Label");
+			Vector3 direction = Vector3.zero;
+			if (label != null) {
+				direction = label.transform.forward;
+			}
+
+			CleanPreviousLabel();
+
 			//draw selection menu
 			GameObject furniture = (GameObject) Resources.Load("Furniture/" + (selectedFurnitureIndex + 1) + "/" + 	(selectedFurnitureIndex + 1), typeof(GameObject));
 			furniture.transform.tag = "select";
@@ -89,7 +97,7 @@ public class SelectionMenu : MonoBehaviour {
 			furnitureSelectPos = instantiatedFurniture.transform.position;
 			instantiatedFurniture.transform.LookAt(player);
 			DrawArrows(instantiatedFurniture.transform.position);
-			DrawLabel(instantiatedFurniture);
+			DrawLabel(instantiatedFurniture, direction);
 			
 			mm.ActivatedMenu = MenuManager.Menu.furniture_select;
 			drawnMenu = true;
@@ -113,16 +121,20 @@ public class SelectionMenu : MonoBehaviour {
 		}
 	}
 
-	private void DrawLabel (GameObject furniture) {
+	private void DrawLabel (GameObject furniture, Vector3 direction) {
 		Vector3 pos = furniture.transform.position;
 		BoxCollider bc = furniture.transform.GetComponent<BoxCollider>();
 		float height = bc.bounds.size.y;
-		Vector3 labelPos = new Vector3(pos.x, pos.y - height, pos.z);
+		Vector3 labelPos = new Vector3(pos.x, pos.y - height/2.0f - 0.5f, pos.z);
 		GameObject furnitureLabel = (GameObject) Resources.Load("Furniture/Label/Furniture_Label", typeof(GameObject));
 		GameObject instantiatedLabel = (GameObject) Instantiate(furnitureLabel, labelPos, Quaternion.identity);
 		instantiatedLabel.transform.name = "Furniture_Label";
-		instantiatedLabel.transform.LookAt(player);
-		instantiatedLabel.transform.forward = -instantiatedLabel.transform.forward;
+		if (direction == Vector3.zero) {
+			instantiatedLabel.transform.LookAt(player);
+			instantiatedLabel.transform.forward = -instantiatedLabel.transform.forward;
+		} else {
+			instantiatedLabel.transform.forward = direction;
+		}
 		instantiatedLabel.transform.GetComponent<TextMesh>().text = egm.Furnitures[selectedFurnitureIndex].Name + " : " + egm.Furnitures[selectedFurnitureIndex].Price + "€";
 	}
 
