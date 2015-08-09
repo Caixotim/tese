@@ -157,6 +157,7 @@ public class SelectionMenu : MonoBehaviour {
 		CleanPreviousLabel();
 		CleanPreviousArrows();
 		CleanPreviousFurniture();
+		drawnMenu = false;
 		mm.ActivatedMenu = MenuManager.Menu.none;
 	}
 }
