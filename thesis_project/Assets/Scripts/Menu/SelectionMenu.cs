@@ -9,12 +9,14 @@ public class SelectionMenu : MonoBehaviour {
 	private float distanceToFurnitureSelect = 1.5f;
 	private bool drawnMenu = false;
 	private Vector3 furnitureSelectPos = Vector3.zero;
+	private Transform player;
 
 	// Use this for initialization
 	void Start () {
 		egm = EditorGameManager.Instance;
 		mm = MenuManager.Instance;
 		selectedFurnitureIndex = 0;
+		player = GameObject.Find("Player").transform;
 	}
 	
 	// Update is called once per frame
@@ -24,13 +26,15 @@ public class SelectionMenu : MonoBehaviour {
 		}
 	}
 
-	void DoAction () {
-		if (this.gameObject.name.Equals("Right")) {
-			SelectRight();
-		} else if(this.gameObject.name.Equals("Left")) {
-			SelectLeft();
+	public void DoAction (string direction) {
+		switch(direction) {
+			case "RightArrow":
+				SelectRight();
+				break;
+			case "LeftArrow":
+				SelectLeft();
+				break;
 		}
-		ShowSelectionMenu(true);
 	}
 
 	private void SelectRight() {
@@ -39,7 +43,7 @@ public class SelectionMenu : MonoBehaviour {
 		} else {
 			selectedFurnitureIndex = 0;
 		}
-		ShowSelectionMenu(true);
+		DrawSelectionMenu(true);
 	}
 
 	private void SelectLeft() {
@@ -48,14 +52,17 @@ public class SelectionMenu : MonoBehaviour {
 		} else {
 			selectedFurnitureIndex = egm.Furnitures.Length - 1;
 		}
-		ShowSelectionMenu(true);
+		DrawSelectionMenu(true);
 	}
 
 	private void ShowSelectionMenu (bool isToShow) {
-		Debug.Log("show selection menu: " + (isToShow && mm.CanDrawMenu && !drawnMenu) );
-		if (isToShow && mm.CanDrawMenu && !drawnMenu) {
-			//Show selection menu
-			DrawSelectionMenu(true);
+		if (isToShow && !drawnMenu) {
+			if (mm.CanDrawMenu) {
+				//Show selection menu
+				DrawSelectionMenu(true);
+			} else {
+				// WarningMessage();
+			}
 		} else if (mm.ActivatedMenu == MenuManager.Menu.furniture_select) {
 			//Hide selection menu
 			DrawSelectionMenu(false);
@@ -79,16 +86,20 @@ public class SelectionMenu : MonoBehaviour {
 
 			GameObject instantiatedFurniture = (GameObject) Instantiate(furniture, furniturePos, Quaternion.identity);
 			furnitureSelectPos = instantiatedFurniture.transform.position;
+			instantiatedFurniture.transform.LookAt(player);
 			DrawArrows(instantiatedFurniture.transform.position);
 			
 			mm.ActivatedMenu = MenuManager.Menu.furniture_select;
 			drawnMenu = true;
+
+			mm.CanDrawMenu = false;
 		} else {
 			//hide selection menu
 			HideMenu();
 
 			mm.ActivatedMenu = MenuManager.Menu.none;
 			drawnMenu = false;
+			mm.CanDrawMenu = true;
 		}
 	}
 
@@ -96,16 +107,12 @@ public class SelectionMenu : MonoBehaviour {
 		GameObject rightArrow = GameObject.Find("RightArrow");
 		GameObject leftArrow = GameObject.Find("LeftArrow");
 
-		if(rightArrow == null) {
-			rightArrow = (GameObject) Resources.Load("Arrows/RightArrow", typeof(GameObject));
-			rightArrow.transform.tag = "interactable";
-			Instantiate(rightArrow, new Vector3(centerPosition.x - distanceToFurnitureSelect, centerPosition.y, centerPosition.z), Quaternion.identity);
-		}
-
-		if(leftArrow == null) {
-			leftArrow = (GameObject) Resources.Load("Arrows/LeftArrow", typeof(GameObject));
-			leftArrow.transform.tag = "interactable";
-			Instantiate(leftArrow, new Vector3(centerPosition.x + distanceToFurnitureSelect, centerPosition.y, centerPosition.z), Quaternion.identity);
+		if (rightArrow == null && leftArrow == null) {
+			GameObject arrows = (GameObject) Resources.Load("Arrows/Arrows", typeof(GameObject));
+			GameObject instantiatedArrows = (GameObject) Instantiate(arrows, centerPosition, Quaternion.identity);
+			instantiatedArrows.transform.name = "Arrows";
+			instantiatedArrows.transform.LookAt(player);
+			instantiatedArrows.transform.forward = -instantiatedArrows.transform.forward;
 		}
 	}
 
@@ -117,10 +124,7 @@ public class SelectionMenu : MonoBehaviour {
 	}
 
 	private void CleanPreviousArrows() {
-		GameObject[] arrows = GameObject.FindGameObjectsWithTag("interactable");
-		foreach(GameObject arrow in arrows){
-			Destroy(arrow);
-		}
+		Destroy(GameObject.Find("Arrows"));
 	}
 
 	private void HideMenu() {
