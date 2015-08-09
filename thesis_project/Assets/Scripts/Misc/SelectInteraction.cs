@@ -66,10 +66,10 @@ public class SelectInteraction : MonoBehaviour {
 		FurnitureHandler fh = createdFurniture.GetComponent<FurnitureHandler> ();
 		fh.SetFurniture (egm.Furnitures [selectedFurnitureIndex]);
 
-		UpdateFurnitureNameLabel(fh.furniture.Name);
+		UpdateFurnitureNameLabel(fh.furniture.Name, fh.furniture.Price);
 	}
 
-	private void UpdateFurnitureNameLabel(string furnitureName) {
-		furnitureNameTextMesh.text = furnitureName;
+	private void UpdateFurnitureNameLabel(string furnitureName, float price) {
+		furnitureNameTextMesh.text = furnitureName + ": " + price + "€";
 	}
 }
