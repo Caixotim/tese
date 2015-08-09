@@ -127,7 +127,7 @@ public class SelectionMenu : MonoBehaviour {
 		Destroy(GameObject.Find("Arrows"));
 	}
 
-	private void HideMenu() {
+	public void HideMenu() {
 		CleanPreviousArrows();
 		CleanPreviousFurniture();
 	}
