@@ -88,18 +88,14 @@ public class SelectionMenu : MonoBehaviour {
 			furnitureSelectPos = instantiatedFurniture.transform.position;
 			instantiatedFurniture.transform.LookAt(player);
 			DrawArrows(instantiatedFurniture.transform.position);
+			DrawLabel(instantiatedFurniture);
 			
 			mm.ActivatedMenu = MenuManager.Menu.furniture_select;
 			drawnMenu = true;
-
-			mm.CanDrawMenu = false;
 		} else {
 			//hide selection menu
 			HideMenu();
-
-			mm.ActivatedMenu = MenuManager.Menu.none;
 			drawnMenu = false;
-			mm.CanDrawMenu = true;
 		}
 	}
 
@@ -116,6 +112,19 @@ public class SelectionMenu : MonoBehaviour {
 		}
 	}
 
+	private void DrawLabel (GameObject furniture) {
+		Vector3 pos = furniture.transform.position;
+		BoxCollider bc = furniture.transform.GetComponent<BoxCollider>();
+		float height = bc.bounds.size.y;
+		Vector3 labelPos = new Vector3(pos.x, pos.y - height, pos.z);
+		GameObject furnitureLabel = (GameObject) Resources.Load("Furniture/Label/Furniture_Label", typeof(GameObject));
+		GameObject instantiatedLabel = (GameObject) Instantiate(furnitureLabel, labelPos, Quaternion.identity);
+		instantiatedLabel.transform.name = "Furniture_Label";
+		instantiatedLabel.transform.LookAt(player);
+		instantiatedLabel.transform.forward = -instantiatedLabel.transform.forward;
+		instantiatedLabel.transform.GetComponent<TextMesh>().text = egm.Furnitures[selectedFurnitureIndex].Name + " : " + egm.Furnitures[selectedFurnitureIndex].Price;
+	}
+
 	private void CleanPreviousFurniture() {
 		GameObject[] selectFurnitures = GameObject.FindGameObjectsWithTag("select");
 		foreach(GameObject selectFurniture in selectFurnitures){
@@ -127,8 +136,14 @@ public class SelectionMenu : MonoBehaviour {
 		Destroy(GameObject.Find("Arrows"));
 	}
 
+	private void CleanPreviousLabel() {
+		Destroy(GameObject.Find("Furniture_Label"));
+	}
+
 	public void HideMenu() {
+		CleanPreviousLabel();
 		CleanPreviousArrows();
 		CleanPreviousFurniture();
+		mm.ActivatedMenu = MenuManager.Menu.none;
 	}
 }
