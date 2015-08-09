@@ -85,6 +85,7 @@ public class SelectionMenu : MonoBehaviour {
 			furniture.transform.tag = "select";
 
 			GameObject instantiatedFurniture = (GameObject) Instantiate(furniture, furniturePos, Quaternion.identity);
+			instantiatedFurniture.gameObject.name = "" + (selectedFurnitureIndex + 1);
 			furnitureSelectPos = instantiatedFurniture.transform.position;
 			instantiatedFurniture.transform.LookAt(player);
 			DrawArrows(instantiatedFurniture.transform.position);
@@ -122,7 +123,7 @@ public class SelectionMenu : MonoBehaviour {
 		instantiatedLabel.transform.name = "Furniture_Label";
 		instantiatedLabel.transform.LookAt(player);
 		instantiatedLabel.transform.forward = -instantiatedLabel.transform.forward;
-		instantiatedLabel.transform.GetComponent<TextMesh>().text = egm.Furnitures[selectedFurnitureIndex].Name + " : " + egm.Furnitures[selectedFurnitureIndex].Price;
+		instantiatedLabel.transform.GetComponent<TextMesh>().text = egm.Furnitures[selectedFurnitureIndex].Name + " : " + egm.Furnitures[selectedFurnitureIndex].Price + "€";
 	}
 
 	private void CleanPreviousFurniture() {
