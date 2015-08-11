@@ -113,9 +113,9 @@ public class SelectionMenu : MonoBehaviour {
 		GameObject leftArrow = GameObject.Find("LeftArrow");
 
 		if (rightArrow == null && leftArrow == null) {
-			GameObject arrows = (GameObject) Resources.Load("Arrows/Arrows", typeof(GameObject));
+			GameObject arrows = (GameObject) Resources.Load("Arrows/RightLeftArrows", typeof(GameObject));
 			GameObject instantiatedArrows = (GameObject) Instantiate(arrows, centerPosition, Quaternion.identity);
-			instantiatedArrows.transform.name = "Arrows";
+			instantiatedArrows.transform.name = "RightLeftArrows";
 			instantiatedArrows.transform.LookAt(player);
 			instantiatedArrows.transform.forward = -instantiatedArrows.transform.forward;
 		}
@@ -146,7 +146,7 @@ public class SelectionMenu : MonoBehaviour {
 	}
 
 	private void CleanPreviousArrows() {
-		Destroy(GameObject.Find("Arrows"));
+		Destroy(GameObject.Find("RightLeftArrows"));
 	}
 
 	private void CleanPreviousLabel() {

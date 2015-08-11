@@ -6,6 +6,7 @@ public class MenuManager {
 	public enum Menu {user_preferences, furniture_select, none};
 	private static Menu activatedMenu = Menu.none;
 	private static bool canDrawMenu = true;
+	private static bool canDrawHeightMenu = true;
 
 	private MenuManager() {
 
@@ -35,6 +36,15 @@ public class MenuManager {
 		}
 		set {
 			canDrawMenu = value;
+		}
+	}
+
+	public bool CanDrawHeightMenu {
+		get {
+			return canDrawHeightMenu;
+		}
+		set {
+			canDrawHeightMenu = value;
 		}
 	}
 }
