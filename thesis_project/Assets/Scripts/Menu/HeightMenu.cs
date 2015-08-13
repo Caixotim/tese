@@ -11,6 +11,7 @@ public class HeightMenu : MonoBehaviour {
 	private Transform player;
 	private char upArrowSymbol = '\u25B2';
 	private char downArrowSymbol = '\u25BC';
+	private GameObject trigger;
 
 	void Start() {
 		egm = EditorGameManager.Instance;
@@ -18,6 +19,7 @@ public class HeightMenu : MonoBehaviour {
 		sm = SimulationManager.Instance;
 
 		player = GameObject.Find("Player").transform;
+		trigger = GameObject.Find("HeightMenu_Trigger");
 	}
 
 	void Update () {
@@ -66,8 +68,6 @@ public class HeightMenu : MonoBehaviour {
 	}
 
 	private void DrawHeightMenu(bool toDraw) {
-		GameObject trigger = GameObject.Find("HeightMenu_Trigger");
-
 		if (toDraw) {
 			Vector3 heightMenuPos;
 
@@ -93,27 +93,35 @@ public class HeightMenu : MonoBehaviour {
 	}
 
 	private void DrawArrows (Vector3 centerPosition) {
-		GameObject rightArrow = GameObject.Find("UpArrow");
-		GameObject leftArrow = GameObject.Find("DownArrow");
+		GameObject upDownArrows = GameObject.Find("UpDownArrows");
 
-		if (rightArrow == null && leftArrow == null) {
+		if (upDownArrows == null) {
 			GameObject arrows = (GameObject) Resources.Load("Arrows/UpDownArrows", typeof(GameObject)); //change to height arrows
 			GameObject instantiatedArrows = (GameObject) Instantiate(arrows, centerPosition, Quaternion.identity);
 			instantiatedArrows.transform.name = "UpDownArrows";
-			instantiatedArrows.transform.LookAt(player);
-			instantiatedArrows.transform.forward = -instantiatedArrows.transform.forward;
 
-			/*GameObject.Find("UpArrow/Text").GetComponent<TextMesh>().text = upArrowSymbol.ToString();
-			GameObject.Find("DownArrow/Text").GetComponent<TextMesh>().text = downArrowSymbol.ToString();*/
+			instantiatedArrows.transform.SetParent(trigger.transform);
+			instantiatedArrows.transform.rotation = Quaternion.identity;
+			instantiatedArrows.transform.LookAt(player);
+			instantiatedArrows.transform.forward = player.transform.forward;
+			instantiatedArrows.transform.localPosition = new Vector3(0, -2.2f, 0);
+			instantiatedArrows.transform.SetParent(null);
 		}
 	}
 
 	private void DrawLabel (Vector3 centerPosition) {
 		Vector3 labelPos = centerPosition;
 		GameObject heightLabel = (GameObject) Resources.Load("Menus/Height/Height_Label", typeof(GameObject));
-		GameObject instantiatedLabel = (GameObject) Instantiate(heightLabel, labelPos, Quaternion.identity);
+		GameObject instantiatedLabel = (GameObject) Instantiate(heightLabel, Vector3.zero, Quaternion.identity);
 		instantiatedLabel.transform.name = "Height_Label";
-		instantiatedLabel.transform.forward = -player.transform.forward;
+		
+		instantiatedLabel.transform.SetParent(trigger.transform);
+		instantiatedLabel.transform.rotation = Quaternion.identity;
+		instantiatedLabel.transform.LookAt(player);
+		instantiatedLabel.transform.forward = player.transform.forward;
+		instantiatedLabel.transform.localPosition = new Vector3(-0.72f, 0, 0);
+		instantiatedLabel.transform.SetParent(null);
+		
 		instantiatedLabel.transform.GetComponent<TextMesh>().text = sm.UserHeight + " cm";
 	}
 
