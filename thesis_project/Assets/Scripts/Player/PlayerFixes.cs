@@ -20,8 +20,6 @@ public class PlayerFixes : MonoBehaviour {
 		ray.origin = this.transform.position;
 		ray.direction = -Vector3.up;
 		if (Physics.Raycast (ray, out hit, 2.0f)) {
-			Debug.Log("bellow player = " + hit.transform.tag);
-
 			 if(hit.transform.tag.Equals ("floor")) {
 
 			 	Transform floorObj = hit.transform;
