@@ -4,7 +4,7 @@ using System.Collections;
 public class BudgetLabel : MonoBehaviour {
 
 	private SimulationManager sm;
-	private string prefixText = "Orçamento: ";
+	private string prefixText = "Total: ";
 
 	void Start () {
 		sm = SimulationManager.Instance;
@@ -15,6 +15,6 @@ public class BudgetLabel : MonoBehaviour {
 	}
 
 	private void UpdateBudgetLabel() {
-		this.GetComponent<TextMesh>().text = prefixText + sm.Budget + "€";
+		this.GetComponent<TextMesh>().text = prefixText + "\n" + sm.Budget + "€";
 	}
 }
