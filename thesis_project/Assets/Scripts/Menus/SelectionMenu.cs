@@ -108,10 +108,16 @@ public class SelectionMenu : MonoBehaviour {
 		cv.enabled = !cv.enabled;
 		if(cv.enabled) {
 			mm.ActivatedMenu = MenuManager.Menu.furniture_select;
+			UpdateBudgetInfo();
 		}
 		else {
 			mm.ActivatedMenu = MenuManager.Menu.none;
 		}
+	}
+
+	private void UpdateBudgetInfo() {
+		Text budget = (Text) GameObject.Find("Menu_Selection/Item_block/Body/Total/Text").GetComponent<Text>();
+		budget.text = "TOTAL: " + egm.Budget + "€";
 	}
 
 }
