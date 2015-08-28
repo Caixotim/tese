@@ -5,6 +5,7 @@ public class SelectionMenu : MonoBehaviour {
 
 	private EditorGameManager egm;
 	private MenuManager mm;
+	private SimulationManager sm;
 	private int selectedFurnitureIndex;
 	private bool drawnMenu = false;
 	private Vector3 furnitureSelectPos = Vector3.zero;
@@ -14,6 +15,7 @@ public class SelectionMenu : MonoBehaviour {
 	void Start () {
 		egm = EditorGameManager.Instance;
 		mm = MenuManager.Instance;
+		sm = SimulationManager.Instance;
 		selectedFurnitureIndex = 0;
 		player = GameObject.Find("Player").transform;
 	}
@@ -97,7 +99,7 @@ public class SelectionMenu : MonoBehaviour {
 			furnitureSelectPos = instantiatedFurniture.transform.position;
 			instantiatedFurniture.transform.LookAt(player);
 			DrawArrows(instantiatedFurniture.transform.position);
-			DrawLabel(instantiatedFurniture, direction);
+			DrawFurnitureLabel(instantiatedFurniture, direction);
 			
 			mm.ActivatedMenu = MenuManager.Menu.furniture_select;
 			drawnMenu = true;
@@ -121,11 +123,11 @@ public class SelectionMenu : MonoBehaviour {
 		}
 	}
 
-	private void DrawLabel (GameObject furniture, Vector3 direction) {
+	private void DrawFurnitureLabel (GameObject furniture, Vector3 direction) {
 		Vector3 pos = furniture.transform.position;
 		BoxCollider bc = furniture.transform.GetComponent<BoxCollider>();
 		float height = bc.bounds.size.y;
-		Vector3 labelPos = new Vector3(pos.x, pos.y - height/2.0f - 0.5f, pos.z);
+		Vector3 labelPos = new Vector3(pos.x, pos.y - height/2.0f - 0.8f, pos.z);
 		GameObject furnitureLabel = (GameObject) Resources.Load("Furniture/Label/Furniture_Label", typeof(GameObject));
 		GameObject instantiatedLabel = (GameObject) Instantiate(furnitureLabel, labelPos, Quaternion.identity);
 		instantiatedLabel.transform.name = "Furniture_Label";
@@ -135,7 +137,8 @@ public class SelectionMenu : MonoBehaviour {
 		} else {
 			instantiatedLabel.transform.forward = direction;
 		}
-		instantiatedLabel.transform.GetComponent<TextMesh>().text = egm.Furnitures[selectedFurnitureIndex].Name + " : " + egm.Furnitures[selectedFurnitureIndex].Price + "€";
+		string nameAndPrice = egm.Furnitures[selectedFurnitureIndex].Name + " : " + egm.Furnitures[selectedFurnitureIndex].Price + "€";
+		instantiatedLabel.transform.GetComponent<TextMesh>().text = nameAndPrice + "\n" + "Total: " + sm.Budget + "€";
 	}
 
 	private void CleanPreviousFurniture() {
@@ -151,6 +154,7 @@ public class SelectionMenu : MonoBehaviour {
 
 	private void CleanPreviousLabel() {
 		Destroy(GameObject.Find("Furniture_Label"));
+
 	}
 
 	public void HideMenu() {
