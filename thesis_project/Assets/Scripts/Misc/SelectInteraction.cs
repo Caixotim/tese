@@ -7,7 +7,7 @@ public class SelectInteraction : MonoBehaviour {
 	private Vector3 modelInitialPos = new Vector3(0.74f, 2.0f, 7.28f);
 	private Quaternion modelInitialRotation = Quaternion.identity;
 	private int selectedFurnitureIndex = 0;
-	private string furniturePath = "Assets/Resources/Furniture/Models/";
+	private string furniturePath = "Furniture/Models/";
 	private TextMesh furnitureNameTextMesh;
 
 	public void Start () {
@@ -58,9 +58,9 @@ public class SelectInteraction : MonoBehaviour {
 	public void CreateFurniture() {
 		//Find furniture in resources folder
 		string furnitureItem = "" + (selectedFurnitureIndex + 1);
-		string fullPath = furniturePath + furnitureItem + "/" + furnitureItem + ".prefab";
+		string fullPath = furniturePath + furnitureItem + "/" + furnitureItem;
 
-		GameObject furniture = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(fullPath, typeof(GameObject));
+		GameObject furniture = (GameObject)Resources.Load(fullPath, typeof(GameObject));
 		GameObject createdFurniture = (GameObject) Instantiate (furniture, modelInitialPos, modelInitialRotation);
 		createdFurniture.name = "" + selectedFurnitureIndex + "_selection";
 		FurnitureHandler fh = createdFurniture.GetComponent<FurnitureHandler> ();
