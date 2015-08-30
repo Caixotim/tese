@@ -98,6 +98,7 @@ public class SelectionMenu : MonoBehaviour {
 			instantiatedFurniture.gameObject.name = "" + (selectedFurnitureIndex + 1);
 			furnitureSelectPos = instantiatedFurniture.transform.position;
 			instantiatedFurniture.transform.LookAt(player);
+			instantiatedFurniture.transform.forward = -instantiatedFurniture.transform.forward;
 			DrawArrows(instantiatedFurniture.transform.position);
 			DrawFurnitureLabel(instantiatedFurniture, direction);
 			
